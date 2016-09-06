@@ -1,5 +1,10 @@
 package by.parf;
 
+import by.parf.protocol.Command;
+import by.parf.protocol.Header;
+import by.parf.protocol.Message;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -7,6 +12,8 @@ import java.net.Socket;
  * Created by Kiryl_Parfiankou on 9/2/2016.
  */
 public class Runner {
+
+    private static ObjectMapper mapper = new ObjectMapper();
 
     public static void main(String[] args) {
 
@@ -21,8 +28,18 @@ public class Runner {
                 )
         {
             String line;
+            Message message;
+            Header header;
             while ((line = in.readLine()) != null) {
-                out.println(line);
+
+                message = new Message();
+                header = new Header();
+                header.setCommand(Command.MESSAGE);
+                message.setHeader(header);
+                message.setBody(line);
+
+                out.println(mapper.writeValueAsString(message));
+
                 if("exit".equals(line)) {
                     break;
                 }
