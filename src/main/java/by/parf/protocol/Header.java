@@ -9,8 +9,12 @@ public class Header {
 
     private Command command;
 
-    @JsonIgnore
-    private String test;
+    public Header() {
+    }
+
+    public Header(Command command) {
+        this.command = command;
+    }
 
     public Command getCommand() {
         return command;
