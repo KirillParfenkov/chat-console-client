@@ -5,7 +5,7 @@ import by.parf.protocol.Request;
 /**
  * Created by parf on 6.9.16.
  */
-public interface RequestService {
+public interface RequestFactory {
     Request createRegister();
     Request createMessage();
     Request createMessage(String message);

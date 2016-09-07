@@ -7,9 +7,9 @@ import by.parf.protocol.Request;
 /**
  * Created by parf on 6.9.16.
  */
-public class RequestServiceImpl implements RequestService {
+public class RequestFactoryImpl implements RequestFactory {
 
-    public RequestServiceImpl() {
+    public RequestFactoryImpl() {
     }
 
     @Override
