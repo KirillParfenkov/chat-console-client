@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
@@ -27,10 +28,19 @@ public class MessageServiceImpl implements MessageService {
         CharsetEncoder encoder = Charset.forName("UTF-8").newEncoder();
 
         try (
-            SocketChannel channel = SocketChannel.open(address);
+            SocketChannel channel = SocketChannel.open();
         ) {
+            channel.configureBlocking(false);
+            channel.connect(address);
+
+
             String message = mapper.writeValueAsString(request);
-            channel.write(encoder.encode(CharBuffer.wrap(message)));
+
+            ByteBuffer buf = encoder.encode(CharBuffer.wrap(message));
+            while (buf.hasRemaining()) {
+                channel.write(buf);
+            }
+
 
         } catch (IOException e) {
             e.printStackTrace();

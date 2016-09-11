@@ -34,7 +34,7 @@ public class Runner {
         String host = args[0];
         int portNumber = Integer.parseInt(args[1]);
 
-        register(host, portNumber);
+      //  register(host, portNumber);
 
         while (console.hasNext()) {
 
