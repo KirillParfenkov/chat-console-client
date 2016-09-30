@@ -30,21 +30,23 @@ public class MessageServiceImpl implements MessageService {
         try (
             SocketChannel channel = SocketChannel.open();
         ) {
-            channel.configureBlocking(false);
+            //channel.configureBlocking(false);
             channel.connect(address);
 
 
             String message = mapper.writeValueAsString(request);
 
             ByteBuffer buf = encoder.encode(CharBuffer.wrap(message));
+
             while (buf.hasRemaining()) {
                 channel.write(buf);
             }
 
-
         } catch (IOException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
     }
